@@ -1,4 +1,4 @@
- export const init () => {
+export function init() {
 
     $("#barcode").igQRCodeBarcode({
         height: "300px",

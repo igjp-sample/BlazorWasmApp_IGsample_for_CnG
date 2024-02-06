@@ -27,12 +27,11 @@
 <div id="spreadsheet"></div>
 
 @code {
-    private IJSObjectReference? module;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            module = await JS.InvokeAsync<IJSObjectReference>("import", "./App.razor.js");
+            await using var module = await JS.InvokeAsync<IJSObjectReference>("import", "./App.razor.js");
             await module.InvokeAsync<string>("init");
         }
     }
