@@ -1,0 +1,40 @@
+﻿@inject IJSRuntime JS
+
+<!--
+    If you want to enable Blazor routing, you should remove all of this contents,
+    and uncomment the below line. (See also: https://docs.microsoft.com/aspnet/core/blazor/routing )
+
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+-->
+
+<div style="text-align: center;">
+    <IgbChip Size="SizableComponentSize.Large" Selectable="false">このコンポーネントは Ignite UI for Blazor を利用しています</IgbChip>
+</div>
+
+<div id="barcode" style="max-width: 300px"></div>
+
+<div id="spreadsheet"></div>
+
+@code {
+    private IJSObjectReference? module;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await JS.InvokeAsync<IJSObjectReference>("import", "./App.razor.js");
+            await module.InvokeAsync<string>("init");
+        }
+    }
+
+}
